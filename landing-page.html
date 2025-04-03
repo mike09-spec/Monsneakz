@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MON Sneakz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/video.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/login.css">
+  </head>     
+  <body style="background-image: url('channel-pictures/7fe1f753a1ae0785c81a61b0f2a8c720.jpg'); background-size: cover; background-repeat: no-repeat;">
+
+    <div class="button-container" style="background-image: url('channel-pictures/button-background.jpg'); background-size: cover; background-repeat: no-repeat; padding: 20px; text-align: center;">
+      <div class="Welcome-page">
+        <h1 class="welcome-text">Welcome to MON Sneakz</h1>
+        <p class="description-text">Discover the latest trends and shop your favorite brands.</p>
+        <p class="description-text">Join us for exclusive offers and updates.</p>
+      </div>
+      <div class="button-group">
+        <button class="btn login-btn" onclick="toggleLoginForm()">Log In</button>
+        <div id="login-form-container" style="display: none;">
+          <form class="login-form" action="login.html" method="post">
+            <input type="text" class="login-input" placeholder="Username" required>
+            <input type="password" class="login-input" placeholder="Password" required>
+            <button class="btn login-btn" type="submit"> <a class="shop-nm" href="first.html">Submit</a></button>
+            <button class="btn login-btn" type="button" onclick="toggleLoginForm()">Cancel</button>
+          </form>
+        </div>
+        <button class="btn shopnow-btn"><a class="shop-nm" href="first.html">Shop Now</a></button>
+        <button class="btn Sign-btn" onclick="toggleSignUpForm()">Sign Up</button>
+        <div id="Sign-form-container" style="display: none;">
+          <form class="Sign-form" action="Sign.html" method="post">
+            <input type="email" class="Sign-input" placeholder="Email " required>
+            <input type="password" class="Sign-input" placeholder="Password" required>
+            <p>Forgot Password</p>
+            
+            <button class="btn Sign-btn" type="submit"><a class="shop-nm" href="first.html">Create</a></button>
+            
+            <button class="btn Sign-btn" type="button" onclick="toggleSignUpForm()">Cancel</button>
+          </form>
+        </div>
+       
+      </div>
+      <script>
+        function toggleLoginForm() {
+          const loginForm = document.getElementById('login-form-container');
+          const isHidden = loginForm.style.display === 'none';
+          loginForm.style.display = isHidden ? 'block' : 'none';
+          document.body.classList.toggle('show-login-form', isHidden);
+        }
+        function toggleSignUpForm() {
+          const signUpForm = document.getElementById('Sign-form-container');
+          const isHidden = signUpForm.style.display === 'none';
+          signUpForm.style.display = isHidden ? 'block' : 'none';
+          document.body.classList.toggle('show-Sign-form', isHidden);
+        }
+      </script>
+    </div>
+  </body>
+</html>
