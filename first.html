@@ -4,32 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MON Sneakz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
     <style>
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
-      html { scroll-behavior: smooth; }
+      html {
+        scroll-behavior: smooth;
+      }
 
       body {
         margin: 0;
-        font-family: 'Roboto', Arial, sans-serif;
-        background: #ededed;
-        color: #171717;
+        font-family: "Roboto", Arial, sans-serif;
+        background: #ececec;
+        color: #1b1b1b;
       }
 
-      a { text-decoration: none; color: inherit; }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
 
-      img { max-width: 100%; display: block; }
+      img {
+        display: block;
+        max-width: 100%;
+      }
 
       .header {
         position: sticky;
         top: 0;
-        z-index: 20;
-        background: rgba(255,255,255,0.96);
-        backdrop-filter: blur(6px);
-        border-bottom: 1px solid #d8d8d8;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid #d6d6d6;
       }
 
       .header-inner {
@@ -39,23 +49,23 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 18px;
       }
 
       .logo-box {
-        background: white;
+        background: #fff;
         border: 3px solid #111;
-        padding: 8px 16px;
-        min-width: 210px;
+        padding: 10px 18px;
+        min-width: 220px;
         text-align: center;
-        box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
       }
 
       .logo-box .brand {
         display: block;
-        font-size: clamp(18px, 2.2vw, 28px);
         font-weight: 900;
         letter-spacing: 2px;
+        font-size: clamp(18px, 2.2vw, 30px);
         line-height: 1;
       }
 
@@ -64,19 +74,19 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
+        gap: 16px;
       }
 
       .search-wrap {
         flex: 1;
-        max-width: 420px;
+        max-width: 440px;
+        height: 46px;
         display: flex;
         align-items: center;
-        border: 1px solid #c8c8c8;
-        background: #f7f7f7;
-        border-radius: 8px;
+        background: #f8f8f8;
+        border: 1px solid #cfcfcf;
+        border-radius: 10px;
         overflow: hidden;
-        height: 46px;
       }
 
       .search-wrap input {
@@ -84,8 +94,8 @@
         border: none;
         outline: none;
         background: transparent;
-        padding: 0 14px;
         font-size: 16px;
+        padding: 0 14px;
       }
 
       .search-icon {
@@ -94,12 +104,12 @@
         display: grid;
         place-items: center;
         border-left: 1px solid #d2d2d2;
-        background: #f0f0f0;
+        background: #f1f1f1;
       }
 
       .search-icon svg {
-        width: 19px;
-        height: 19px;
+        width: 18px;
+        height: 18px;
       }
 
       .actions {
@@ -110,12 +120,12 @@
 
       .icon-btn {
         position: relative;
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
+        background: #f4f4f4;
         display: grid;
         place-items: center;
-        background: #f1f1f1;
         border: 1px solid #d8d8d8;
       }
 
@@ -128,62 +138,58 @@
         position: absolute;
         top: -4px;
         right: -2px;
-        background: #d90e0e;
-        color: white;
-        border-radius: 999px;
         min-width: 18px;
         height: 18px;
-        display: grid;
-        place-items: center;
+        border-radius: 999px;
+        background: #db0f0f;
+        color: white;
         font-size: 11px;
         font-weight: 700;
+        display: grid;
+        place-items: center;
         padding: 0 5px;
       }
 
       .avatar {
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         overflow: hidden;
-        border: 2px solid #d7d7d7;
-        background: #ddd;
+        border: 2px solid #d9d9d9;
+        background: #e3e3e3;
       }
 
       .nav-bar {
-        padding: 14px 20px 8px;
+        padding: 8px 20px 14px;
       }
 
       .nav-ul {
         max-width: 1200px;
         margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        list-style: none;
         padding: 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 34px;
       }
 
       .nav-ul a {
         font-size: 18px;
+        color: #212121;
         font-weight: 500;
-        color: #1d1d1d;
-        padding: 8px 4px;
-        display: inline-block;
       }
-
-      .nav-ul a:hover { color: #000; }
 
       main {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px 16px 50px;
+        padding: 20px 16px 60px;
       }
 
       .section-label {
         text-align: center;
         margin: 18px 0 18px;
-        font-size: clamp(28px, 4vw, 42px);
+        font-size: clamp(30px, 4vw, 44px);
         font-weight: 900;
         letter-spacing: 1px;
       }
@@ -195,11 +201,11 @@
       }
 
       .video-preview {
-        background: #fff;
-        border-radius: 14px;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        background: white;
+        border: 1px solid #ebebeb;
+        border-radius: 16px;
         overflow: hidden;
-        border: 1px solid #ececec;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
       }
 
       .thumbnail-row {
@@ -211,70 +217,73 @@
         width: 100%;
         height: 220px;
         object-fit: contain;
-        background: #f4f4f4;
+        background: #f3f3f3;
       }
 
       .video-time {
         position: absolute;
         right: 12px;
         bottom: 12px;
-        background: rgba(0,0,0,0.72);
+        background: rgba(0, 0, 0, 0.75);
         color: white;
         font-size: 12px;
         font-weight: 600;
-        border-radius: 6px;
         padding: 6px 8px;
+        border-radius: 6px;
       }
 
       .video-info {
-        padding: 14px 14px 16px;
+        padding: 14px 14px 18px;
       }
 
       .video-title {
         margin: 0 0 12px;
-        font-size: 14px;
-        line-height: 1.5;
+        line-height: 1.45;
         font-weight: 500;
-        min-height: 70px;
+        font-size: 14px;
+        min-height: 72px;
       }
 
       .video-author,
       .video-stats {
-        font-size: 12px;
-        color: #595959;
         margin: 0;
+        color: #595959;
+        font-size: 12px;
       }
 
-      .video-author { margin-bottom: 4px; }
+      .video-author {
+        margin-bottom: 5px;
+      }
 
       .about-us {
         margin-top: 30px;
         background: #fff;
-        border-radius: 14px;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #ebebeb;
+        border-radius: 16px;
         padding: 20px 18px;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.06);
       }
 
       .about-us h2 {
-        margin: 0 0 12px;
-        font-size: 28px;
+        margin: 0 0 14px;
+        font-size: 30px;
       }
 
       .about-us p {
-        margin: 0 0 12px;
+        margin: 0 0 10px;
         line-height: 1.7;
-        color: #333;
+        color: #2f2f2f;
       }
 
       .about-us h3 {
-        margin: 22px 0 8px;
+        margin: 18px 0 8px;
+        font-size: 22px;
       }
 
       .about-us ul {
         margin: 0;
         padding-left: 18px;
-        line-height: 1.8;
+        line-height: 1.9;
       }
 
       @media (max-width: 980px) {
@@ -295,12 +304,13 @@
         }
 
         .nav-ul {
-          gap: 18px;
+          gap: 16px;
           flex-wrap: wrap;
         }
 
-        .nav-ul a {
-          font-size: 16px;
+        .search-wrap {
+          max-width: none;
+          width: min(100%, 440px);
         }
 
         .video-grid {
@@ -322,9 +332,9 @@
 
         <div class="toolbar">
           <div class="search-wrap">
-            <input type="text" placeholder="Search" aria-label="Search" />
+            <input type="text" placeholder="Search" />
             <div class="search-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="6"></circle>
                 <path d="M16 16L21 21"></path>
               </svg>
@@ -341,7 +351,7 @@
               <span class="badge">3</span>
             </div>
 
-            <div class="avatar" aria-label="Profile picture">
+            <div class="avatar">
               <img src="channel-pictures/my-channel.jpeg" alt="Profile" style="width:100%;height:100%;object-fit:cover;" />
             </div>
           </div>
@@ -363,7 +373,7 @@
       <section id="nike" class="video-grid">
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(1).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
             <div class="video-time">14,975.40 $</div>
           </div>
           <div class="video-info">
@@ -375,7 +385,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(2).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(2).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -387,7 +397,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(3).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(3).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
             <div class="video-time">18,500.00 $</div>
           </div>
           <div class="video-info">
@@ -399,7 +409,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(4).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(4).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
             <div class="video-time">16,750.00 $</div>
           </div>
           <div class="video-info">
@@ -414,7 +424,7 @@
       <section id="adidas" class="video-grid">
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(1).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(1).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -426,7 +436,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(2).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(2).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -438,7 +448,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(3).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(3).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
             <div class="video-time">18,450.00 $</div>
           </div>
           <div class="video-info">
@@ -450,7 +460,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(4).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(4).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -466,6 +476,7 @@
         <p>Welcome to MON Sneakz, your ultimate destination for premium sneakers and footwear. We are passionate about bringing you the latest and most sought-after designs from top brands like Nike, Adidas, Fila, Jordan, and New Balance.</p>
         <p>At MON Sneakz, we believe that sneakers are more than just shoes—they are a statement of style, individuality, and culture.</p>
         <p>Thank you for choosing MON Sneakz. We look forward to being a part of your sneaker journey!</p>
+
         <h3>Contact Us</h3>
         <ul>
           <li><strong>Phone:</strong> +1-234-567-890</li>
@@ -474,6 +485,7 @@
           <li><strong>Facebook:</strong> <a href="https://facebook.com/monsneakz" target="_blank">MON Sneakz</a></li>
         </ul>
       </section>
+
       <section id="account"></section>
     </main>
   </body>
