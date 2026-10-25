@@ -1,194 +1,369 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MON Sneakz</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/general.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/video.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
     <style>
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
       body {
-        background: #e6e6e6;
+        margin: 0;
+        font-family: 'Roboto', Arial, sans-serif;
+        background: #ededed;
+        color: #171717;
       }
 
+      a { text-decoration: none; color: inherit; }
+
+      img { max-width: 100%; display: block; }
+
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(255,255,255,0.96);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid #d8d8d8;
+      }
+
+      .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 16px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .logo-box {
+        background: white;
+        border: 3px solid #111;
+        padding: 8px 16px;
+        min-width: 210px;
+        text-align: center;
+        box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+      }
+
+      .logo-box .brand {
+        display: block;
+        font-size: clamp(18px, 2.2vw, 28px);
+        font-weight: 900;
+        letter-spacing: 2px;
+        line-height: 1;
+      }
+
+      .toolbar {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .search-wrap {
+        flex: 1;
+        max-width: 420px;
+        display: flex;
+        align-items: center;
+        border: 1px solid #c8c8c8;
+        background: #f7f7f7;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 46px;
+      }
+
+      .search-wrap input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 0 14px;
+        font-size: 16px;
+      }
+
+      .search-icon {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-left: 1px solid #d2d2d2;
+        background: #f0f0f0;
+      }
+
+      .search-icon svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .icon-btn {
+        position: relative;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #f1f1f1;
+        border: 1px solid #d8d8d8;
+      }
+
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .badge {
+        position: absolute;
+        top: -4px;
+        right: -2px;
+        background: #d90e0e;
+        color: white;
+        border-radius: 999px;
+        min-width: 18px;
+        height: 18px;
+        display: grid;
+        place-items: center;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 0 5px;
+      }
+
+      .avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #d7d7d7;
+        background: #ddd;
+      }
+
+      .nav-bar {
+        padding: 14px 20px 8px;
+      }
+
+      .nav-ul {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        list-style: none;
+        padding: 0;
+      }
+
+      .nav-ul a {
+        font-size: 18px;
+        font-weight: 500;
+        color: #1d1d1d;
+        padding: 8px 4px;
+        display: inline-block;
+      }
+
+      .nav-ul a:hover { color: #000; }
+
       main {
-        padding-top: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 16px 50px;
+      }
+
+      .section-label {
+        text-align: center;
+        margin: 18px 0 18px;
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 900;
+        letter-spacing: 1px;
       }
 
       .video-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 18px;
-        margin: 0 16px 30px;
       }
 
       .video-preview {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
         overflow: hidden;
+        border: 1px solid #ececec;
       }
 
       .thumbnail-row {
         position: relative;
-        background: #f5f5f5;
-        min-height: 170px;
+        background: #f6f6f6;
       }
 
       .thumbnail {
         width: 100%;
-        height: 200px;
+        height: 220px;
         object-fit: contain;
-        display: block;
-        background: #f3f3f3;
+        background: #f4f4f4;
       }
 
       .video-time {
         position: absolute;
-        right: 10px;
-        bottom: 10px;
-        background: rgba(0,0,0,0.75);
+        right: 12px;
+        bottom: 12px;
+        background: rgba(0,0,0,0.72);
         color: white;
-        font-size: 11px;
-        padding: 4px 7px;
-        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 6px 8px;
       }
 
       .video-info {
-        padding: 12px 12px 16px;
+        padding: 14px 14px 16px;
       }
 
       .video-title {
+        margin: 0 0 12px;
         font-size: 14px;
-        line-height: 1.4;
-        margin: 0 0 8px;
+        line-height: 1.5;
         font-weight: 500;
+        min-height: 70px;
       }
 
       .video-author,
       .video-stats {
         font-size: 12px;
-        color: #555;
+        color: #595959;
         margin: 0;
       }
 
-      .video-author {
-        margin-bottom: 6px;
+      .video-author { margin-bottom: 4px; }
+
+      .about-us {
+        margin-top: 30px;
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #e7e7e7;
+        padding: 20px 18px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
       }
 
-      @media (max-width: 768px) {
-        .header {
-          height: auto;
-          flex-wrap: wrap;
-          gap: 10px;
-          padding: 10px 12px;
-        }
+      .about-us h2 {
+        margin: 0 0 12px;
+        font-size: 28px;
+      }
 
-        .left-section,
-        .middle-section,
-        .right-section {
-          width: 100%;
+      .about-us p {
+        margin: 0 0 12px;
+        line-height: 1.7;
+        color: #333;
+      }
+
+      .about-us h3 {
+        margin: 22px 0 8px;
+      }
+
+      .about-us ul {
+        margin: 0;
+        padding-left: 18px;
+        line-height: 1.8;
+      }
+
+      @media (max-width: 980px) {
+        .video-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .header-inner {
+          flex-wrap: wrap;
           justify-content: center;
         }
 
-        .left-section {
-          margin: 0;
-        }
-
-        .middle-section {
-          order: 3;
-        }
-
-        .right-section {
-          order: 2;
-          margin-right: 0;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-
-        .nav-bar {
+        .toolbar {
           width: 100%;
+          justify-content: center;
         }
 
         .nav-ul {
+          gap: 18px;
           flex-wrap: wrap;
-          justify-content: center;
-          gap: 6px 12px;
-          padding: 0;
-          margin: 0;
         }
 
-        .youtube-logo {
-          width: 180px;
-          height: auto;
-          margin-left: 0;
-        }
-
-        .search-bar {
-          flex: 1 1 140px;
-          min-width: 0;
+        .nav-ul a {
+          font-size: 16px;
         }
 
         .video-grid {
           grid-template-columns: 1fr;
-          margin: 0 12px 20px;
         }
 
         .thumbnail {
-          height: 180px;
+          height: 240px;
         }
       }
     </style>
   </head>
   <body>
     <header class="header">
-      <div class="left-section">
-        <img class="youtube-logo" src="channel-pictures/logo3_26_123438.png" alt="MON Sneakz logo">
-      </div>
-      <div class="middle-section">
-        <nav class="nav-bar">
-          <ul class="nav-ul">
-            <li><a href="#nike" class="btn">Home</a></li>
-            <li class="dropdown">
-              <a href="#brand" class="btn">Brand</a>
-              <ul class="dropdown-menu">
-                <li><a href="#nike">Nike</a></li>
-                <li><a href="#adidas">Adidas</a></li>
-                <li><a href="#fila">Fila</a></li>
-                <li><a href="#jordan">Jordan</a></li>
-                <li><a href="#newbalance">New Balance</a></li>
-              </ul>
-            </li>
-            <li><a href="#about" class="btn">About</a></li>
-            <li><a href="#account" class="btn">Account</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div class="right-section">
-        <input class="search-bar" type="text" placeholder="Search">
-        <button class="search-button" type="button">
-          <img class="search-icon" src="icon/search.svg" alt="Search icon">
-          <div class="tooltip">Search</div>
-        </button>
-        <img class="youtube-apps-icon" src="icon/shopping-cart.png" alt="Cart">
-        <div class="notifications-icon-container">
-          <img class="notifications-icon" src="icon/bell%20(1).png" alt="Notifications">
-          <div class="notifications-count">3</div>
+      <div class="header-inner">
+        <div class="logo-box">
+          <span class="brand">MON SNEAKZ</span>
         </div>
-        <img class="current-user-picture" src="channel-pictures/my-channel.jpeg" alt="Profile picture">
+
+        <div class="toolbar">
+          <div class="search-wrap">
+            <input type="text" placeholder="Search" aria-label="Search" />
+            <div class="search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="6"></circle>
+                <path d="M16 16L21 21"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="actions">
+            <div class="icon-btn" aria-label="Cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="19" r="1"></circle>
+                <circle cx="18" cy="19" r="1"></circle>
+                <path d="M2 3h3l2.4 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L18.7 7H6"></path>
+              </svg>
+              <span class="badge">3</span>
+            </div>
+
+            <div class="avatar" aria-label="Profile picture">
+              <img src="channel-pictures/my-channel.jpeg" alt="Profile" style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+          </div>
+        </div>
       </div>
+
+      <nav class="nav-bar">
+        <ul class="nav-ul">
+          <li><a href="#nike">Home</a></li>
+          <li><a href="#brand">Brand</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#account">Account</a></li>
+        </ul>
+      </nav>
     </header>
 
     <main>
-      <h1>NIKE</h1>
+      <h1 class="section-label">NIKE</h1>
       <section id="nike" class="video-grid">
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(1).webp" alt="Nike Sneaker 1" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
             <div class="video-time">14,975.40 $</div>
           </div>
           <div class="video-info">
@@ -196,11 +371,11 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
+        </article>
 
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(2).webp" alt="Nike Sneaker 2" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(2).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -208,11 +383,11 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
+        </article>
 
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(3).webp" alt="Nike Sneaker 3" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(3).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
             <div class="video-time">18,500.00 $</div>
           </div>
           <div class="video-info">
@@ -220,11 +395,11 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
+        </article>
 
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(4).webp" alt="Nike Sneaker 4" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
+            <img class="thumbnail" src="nike/s-l500%20(4).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
             <div class="video-time">16,750.00 $</div>
           </div>
           <div class="video-info">
@@ -232,62 +407,14 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
-
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(5).webp" alt="Nike Sneaker 5" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
-            <div class="video-time">20,300.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Nike G.T Cut 3 EP Basketball Shoes Hyper Pink DV2918-600 Expeditedship</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
-
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(6).webp" alt="Nike Sneaker 6" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
-            <div class="video-time">15,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Nike Ja 1 EP Morant Personal Touch Men Basketball Hoopers Shoes FV1288-001</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
-
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(7).webp" alt="Nike Sneaker 7" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
-            <div class="video-time">17,450.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Freak 5 EP Ode To Your First Love Men Basketball Shoes DX4996-402</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
-
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(8).webp" alt="Nike Sneaker 8" onerror="this.onerror=null;this.src='nike/s-l500.webp';">
-            <div class="video-time">19,200.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">KD17 EP Kevin Durant Vivid Purple Men Basketball Hoopers Shoes FJ9488-400</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
+        </article>
       </section>
 
-      <h1>ADIDAS</h1>
+      <h1 class="section-label">ADIDAS</h1>
       <section id="adidas" class="video-grid">
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(1).webp" alt="Adidas Sneaker 1" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(1).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -295,11 +422,11 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
+        </article>
 
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(2).webp" alt="Adidas Sneaker 2" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(2).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -307,11 +434,11 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
+        </article>
 
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(3).webp" alt="Adidas Sneaker 3" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(3).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
             <div class="video-time">18,450.00 $</div>
           </div>
           <div class="video-info">
@@ -319,11 +446,11 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
+        </article>
 
-        <div class="video-preview">
+        <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(4).webp" alt="Adidas Sneaker 4" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
+            <img class="thumbnail" src="nb/s-l500%20(4).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -331,64 +458,13 @@
             <p class="video-author">MrBeast</p>
             <p class="video-stats">141M views · 1 year ago</p>
           </div>
-        </div>
-      </section>
-
-      <h1>NEW BALANCE</h1>
-      <section id="newbalance" class="video-grid">
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(5).webp" alt="New Balance Sneaker 1" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">New Balance U530NEA-NEA Men Shoes</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
-
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(6).webp" alt="New Balance Sneaker 2" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">New Balance U74OWN2-WN2 Men Shoes</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
-
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(7).webp" alt="New Balance Sneaker 3" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">New Balance U74OWM2-WM2 Men Shoes</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
-
-        <div class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(8).webp" alt="New Balance Sneaker 4" onerror="this.onerror=null;this.src='nb/s-l500.webp';">
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">New Balance MR530EMA-EMA Men Shoes</p>
-            <p class="video-author">MrBeast</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </div>
+        </article>
       </section>
 
       <section class="about-us" id="about">
         <h2>About Us</h2>
         <p>Welcome to MON Sneakz, your ultimate destination for premium sneakers and footwear. We are passionate about bringing you the latest and most sought-after designs from top brands like Nike, Adidas, Fila, Jordan, and New Balance.</p>
-        <p>At MON Sneakz, we believe that sneakers are more than just shoes—they are a statement of style, individuality, and culture. Whether you're a basketball player, a casual wearer, or a collector, our curated collection offers something for everyone.</p>
+        <p>At MON Sneakz, we believe that sneakers are more than just shoes—they are a statement of style, individuality, and culture.</p>
         <p>Thank you for choosing MON Sneakz. We look forward to being a part of your sneaker journey!</p>
         <h3>Contact Us</h3>
         <ul>
@@ -398,7 +474,6 @@
           <li><strong>Facebook:</strong> <a href="https://facebook.com/monsneakz" target="_blank">MON Sneakz</a></li>
         </ul>
       </section>
-
       <section id="account"></section>
     </main>
   </body>
