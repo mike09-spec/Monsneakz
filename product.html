@@ -54,6 +54,7 @@
         font-weight: 900;
         letter-spacing: 2px;
         line-height: 1;
+        text-transform: uppercase;
       }
 
       .toolbar {
@@ -199,6 +200,12 @@
         overflow: hidden;
         background: #f7f7f7;
         cursor: pointer;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+      }
+
+      .thumb.active {
+        border-color: #f15a24;
+        transform: translateY(-1px);
       }
 
       .thumb img {
@@ -242,15 +249,8 @@
         margin-bottom: 18px;
       }
 
-      .rating {
-        color: #f5a623;
-        font-weight: 700;
-      }
-
-      .reviews {
-        color: #3a3a3a;
-        font-size: 14px;
-      }
+      .rating { color: #f5a623; font-weight: 700; }
+      .reviews { color: #3a3a3a; font-size: 14px; }
 
       .price-box {
         display: flex;
@@ -305,13 +305,15 @@
         gap: 10px;
       }
 
-      .color-pill {
+      .color-pill,
+      .size-pill {
         padding: 10px 14px;
         border: 1px solid #d9d9d9;
         border-radius: 999px;
         background: white;
         cursor: pointer;
         font-weight: 600;
+        transition: all 0.2s ease;
       }
 
       .color-pill.active {
@@ -328,12 +330,7 @@
       }
 
       .size-pill {
-        padding: 10px 14px;
-        border: 1px solid #d9d9d9;
         border-radius: 10px;
-        background: white;
-        cursor: pointer;
-        font-weight: 600;
       }
 
       .size-pill.active {
@@ -420,32 +417,15 @@
       }
 
       @media (max-width: 980px) {
-        .product-shell {
-          grid-template-columns: 1fr;
-        }
-        .related-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+        .product-shell { grid-template-columns: 1fr; }
+        .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
 
       @media (max-width: 720px) {
-        .header-inner {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .toolbar {
-          width: 100%;
-          justify-content: center;
-        }
-
-        .search-wrap {
-          max-width: none;
-        }
-
-        .related-grid {
-          grid-template-columns: 1fr;
-        }
+        .header-inner { flex-wrap: wrap; justify-content: center; }
+        .toolbar { width: 100%; justify-content: center; }
+        .search-wrap { max-width: none; }
+        .related-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -489,10 +469,10 @@
       <div class="product-shell">
         <div class="gallery-card">
           <div class="gallery-main">
-            <img src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
+            <img id="main-product-image" src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
           </div>
           <div class="thumb-row">
-            <div class="thumb"><img src="nike/s-l500%20(1).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
+            <div class="thumb active"><img src="nike/s-l500%20(1).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
             <div class="thumb"><img src="nike/s-l500%20(2).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
             <div class="thumb"><img src="nike/s-l500%20(3).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
             <div class="thumb"><img src="nike/s-l500%20(4).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
@@ -590,5 +570,38 @@
         </div>
       </div>
     </main>
+
+    <script>
+      const colorButtons = document.querySelectorAll('.color-pill');
+      const sizeButtons = document.querySelectorAll('.size-pill');
+      const thumbs = document.querySelectorAll('.thumb');
+      const mainImage = document.getElementById('main-product-image');
+
+      colorButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          colorButtons.forEach((btn) => btn.classList.remove('active'));
+          button.classList.add('active');
+        });
+      });
+
+      sizeButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          sizeButtons.forEach((btn) => btn.classList.remove('active'));
+          button.classList.add('active');
+        });
+      });
+
+      thumbs.forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+          thumbs.forEach((item) => item.classList.remove('active'));
+          thumb.classList.add('active');
+          const img = thumb.querySelector('img');
+          if (img) {
+            mainImage.src = img.src;
+            mainImage.alt = img.alt;
+          }
+        });
+      });
+    </script>
   </body>
 </html>
