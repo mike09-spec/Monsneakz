@@ -79,6 +79,69 @@
       .video-author {
         margin-bottom: 6px;
       }
+
+      @media (max-width: 768px) {
+        .header {
+          height: auto;
+          flex-wrap: wrap;
+          gap: 10px;
+          padding: 10px 12px;
+        }
+
+        .left-section,
+        .middle-section,
+        .right-section {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .left-section {
+          margin: 0;
+        }
+
+        .middle-section {
+          order: 3;
+        }
+
+        .right-section {
+          order: 2;
+          margin-right: 0;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .nav-bar {
+          width: 100%;
+        }
+
+        .nav-ul {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 6px 12px;
+          padding: 0;
+          margin: 0;
+        }
+
+        .youtube-logo {
+          width: 180px;
+          height: auto;
+          margin-left: 0;
+        }
+
+        .search-bar {
+          flex: 1 1 140px;
+          min-width: 0;
+        }
+
+        .video-grid {
+          grid-template-columns: 1fr;
+          margin: 0 12px 20px;
+        }
+
+        .thumbnail {
+          height: 180px;
+        }
+      }
     </style>
   </head>
   <body>
