@@ -9,39 +9,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
     <style>
       * { box-sizing: border-box; }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
         font-family: "Roboto", Arial, sans-serif;
-        background: #f2f2f2;
+        background: #f3f3f3;
         color: #1d1d1d;
       }
-
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-
-      img {
-        display: block;
-        width: 100%;
-      }
-
-      button, input {
-        font: inherit;
-      }
+      a { text-decoration: none; color: inherit; }
+      img { display: block; width: 100%; }
+      button, input { font: inherit; }
 
       .header {
         position: sticky;
         top: 0;
-        z-index: 40;
+        z-index: 20;
         background: rgba(255,255,255,0.96);
+        border-bottom: 1px solid #e3e3e3;
         backdrop-filter: blur(8px);
-        border-bottom: 1px solid #e0e0e0;
       }
 
       .header-inner {
@@ -58,16 +43,16 @@
         background: #fff;
         border: 3px solid #111;
         padding: 10px 18px;
-        min-width: 230px;
+        min-width: 220px;
         text-align: center;
         box-shadow: 0 3px 0 rgba(0,0,0,0.15);
       }
 
       .brand-text {
         display: block;
+        font-size: clamp(18px, 2vw, 30px);
         font-weight: 900;
         letter-spacing: 2px;
-        font-size: clamp(18px, 2.2vw, 30px);
         line-height: 1;
       }
 
@@ -76,18 +61,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 18px;
+        gap: 14px;
       }
 
       .search-wrap {
         flex: 1;
-        max-width: 480px;
+        max-width: 450px;
         height: 46px;
         display: flex;
         align-items: center;
-        border: 1px solid #d4d4d4;
-        border-radius: 10px;
         background: #f8f8f8;
+        border: 1px solid #d5d5d5;
+        border-radius: 10px;
         overflow: hidden;
       }
 
@@ -105,14 +90,14 @@
         height: 46px;
         display: grid;
         place-items: center;
-        background: #f0f0f0;
-        border-left: 1px solid #d4d4d4;
+        background: #f1f1f1;
+        border-left: 1px solid #d5d5d5;
       }
 
       .search-icon-box svg {
         width: 18px;
         height: 18px;
-        stroke: #2b2b2b;
+        stroke: #1d1d1d;
       }
 
       .actions {
@@ -123,20 +108,19 @@
 
       .icon-btn {
         position: relative;
-        border-radius: 50%;
         width: 40px;
         height: 40px;
+        border-radius: 50%;
+        background: #f4f4f4;
+        border: 1px solid #d9d9d9;
         display: grid;
         place-items: center;
-        background: #f4f4f4;
-        border: 1px solid #d8d8d8;
-        cursor: pointer;
       }
 
       .icon-btn svg {
         width: 18px;
         height: 18px;
-        stroke: #222;
+        stroke: #212121;
       }
 
       .badge {
@@ -146,13 +130,13 @@
         min-width: 18px;
         height: 18px;
         padding: 0 5px;
+        display: grid;
+        place-items: center;
         border-radius: 999px;
-        background: #e53935;
+        background: #e93d3d;
         color: white;
         font-size: 11px;
         font-weight: 700;
-        display: grid;
-        place-items: center;
       }
 
       .profile {
@@ -160,11 +144,12 @@
         height: 40px;
         border-radius: 50%;
         overflow: hidden;
-        border: 2px solid #d7d7d7;
         background: #e5e5e5;
+        border: 2px solid #d7d7d7;
       }
 
       .profile img {
+        width: 100%;
         height: 100%;
         object-fit: cover;
       }
@@ -180,13 +165,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 26px;
+        gap: 28px;
         padding: 0;
         margin: 0;
-        position: relative;
-      }
-
-      .nav-item {
         position: relative;
       }
 
@@ -195,23 +176,27 @@
         padding: 8px 4px;
         font-size: 18px;
         font-weight: 500;
-        color: #222;
+        color: #232323;
       }
 
       .nav-link:hover {
         color: #000;
       }
 
+      .nav-item {
+        position: relative;
+      }
+
       .brand-menu {
         position: absolute;
-        top: calc(100% + 6px);
+        top: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
         min-width: 180px;
         background: white;
-        border: 1px solid #e5e5e5;
-        border-radius: 10px;
-        box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+        border: 1px solid #ececec;
+        border-radius: 12px;
+        box-shadow: 0 16px 30px rgba(0,0,0,0.12);
         padding: 8px 0;
         display: none;
       }
@@ -223,12 +208,12 @@
       .brand-menu a {
         display: block;
         padding: 10px 16px;
-        font-size: 15px;
         color: #222;
+        font-size: 15px;
       }
 
       .brand-menu a:hover {
-        background: #f5f5f5;
+        background: #f7f7f7;
       }
 
       main {
@@ -238,7 +223,7 @@
       }
 
       .section-label {
-        margin: 18px 0 20px;
+        margin: 18px 0 18px;
         text-align: center;
         font-size: clamp(30px, 4vw, 44px);
         font-weight: 900;
@@ -252,22 +237,22 @@
       }
 
       .video-preview {
-        background: #fff;
+        background: white;
         border: 1px solid #ebebeb;
         border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.06);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
       }
 
       .video-preview:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       }
 
       .thumbnail-row {
         position: relative;
-        background: #fafafa;
+        background: #f7f7f7;
       }
 
       .thumbnail {
@@ -280,24 +265,24 @@
         position: absolute;
         right: 12px;
         bottom: 12px;
-        background: rgba(0,0,0,0.78);
-        color: #fff;
+        background: rgba(0,0,0,0.74);
+        color: white;
+        padding: 6px 8px;
+        border-radius: 6px;
         font-size: 12px;
         font-weight: 700;
-        border-radius: 6px;
-        padding: 6px 8px;
       }
 
       .video-info {
-        padding: 14px 14px 16px;
+        padding: 14px 14px 18px;
       }
 
       .video-title {
         margin: 0 0 12px;
-        min-height: 78px;
+        min-height: 76px;
         font-size: 14px;
-        line-height: 1.5;
         font-weight: 500;
+        line-height: 1.5;
         color: #1f1f1f;
       }
 
@@ -305,20 +290,20 @@
       .video-stats {
         margin: 0;
         font-size: 12px;
-        color: #5f5f5f;
+        color: #5d5d5d;
       }
 
       .video-author {
-        margin-bottom: 4px;
+        margin-bottom: 5px;
       }
 
       .about-us {
         margin-top: 34px;
-        background: #fff;
-        border: 1px solid #ebebeb;
+        background: white;
         border-radius: 16px;
+        border: 1px solid #ebebeb;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
         padding: 20px 18px;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.06);
       }
 
       .about-us h2 {
@@ -327,7 +312,7 @@
       }
 
       .about-us p {
-        margin: 0 0 10px;
+        margin: 0 0 12px;
         line-height: 1.7;
         color: #2d2d2d;
       }
@@ -339,7 +324,7 @@
 
       .about-us ul {
         margin: 0;
-        padding-left: 18px;
+        padding-left: 20px;
         line-height: 1.9;
       }
 
@@ -361,8 +346,8 @@
         }
 
         .nav-ul {
-          gap: 12px 20px;
           flex-wrap: wrap;
+          gap: 12px 20px;
         }
 
         .nav-link {
@@ -419,7 +404,7 @@
           <li><a href="#nike" class="nav-link">Home</a></li>
 
           <li class="nav-item" id="brandMenuItem">
-            <button type="button" class="nav-link" id="brandToggle" style="background:none;border:none;cursor:pointer;padding:8px 4px;font-weight:500;">
+            <button type="button" class="nav-link" id="brandToggle" style="background:none;border:none;cursor:pointer;padding:8px 4px;">
               Brand
             </button>
             <div class="brand-menu" id="brandMenu">
