@@ -8,9 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       html {
         scroll-behavior: smooth;
@@ -19,8 +17,8 @@
       body {
         margin: 0;
         font-family: "Roboto", Arial, sans-serif;
-        background: #ececec;
-        color: #1b1b1b;
+        background: #f2f2f2;
+        color: #1d1d1d;
       }
 
       a {
@@ -30,22 +28,26 @@
 
       img {
         display: block;
-        max-width: 100%;
+        width: 100%;
+      }
+
+      button, input {
+        font: inherit;
       }
 
       .header {
         position: sticky;
         top: 0;
-        z-index: 10;
-        background: rgba(255, 255, 255, 0.96);
+        z-index: 40;
+        background: rgba(255,255,255,0.96);
         backdrop-filter: blur(8px);
-        border-bottom: 1px solid #d6d6d6;
+        border-bottom: 1px solid #e0e0e0;
       }
 
       .header-inner {
-        max-width: 1200px;
+        max-width: 1280px;
         margin: 0 auto;
-        padding: 14px 16px 10px;
+        padding: 12px 18px 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -56,12 +58,12 @@
         background: #fff;
         border: 3px solid #111;
         padding: 10px 18px;
-        min-width: 220px;
+        min-width: 230px;
         text-align: center;
-        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 0 3px 0 rgba(0,0,0,0.15);
       }
 
-      .logo-box .brand {
+      .brand-text {
         display: block;
         font-weight: 900;
         letter-spacing: 2px;
@@ -74,18 +76,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 18px;
       }
 
       .search-wrap {
         flex: 1;
-        max-width: 440px;
+        max-width: 480px;
         height: 46px;
         display: flex;
         align-items: center;
-        background: #f8f8f8;
-        border: 1px solid #cfcfcf;
+        border: 1px solid #d4d4d4;
         border-radius: 10px;
+        background: #f8f8f8;
         overflow: hidden;
       }
 
@@ -98,18 +100,19 @@
         padding: 0 14px;
       }
 
-      .search-icon {
+      .search-icon-box {
         width: 46px;
         height: 46px;
         display: grid;
         place-items: center;
-        border-left: 1px solid #d2d2d2;
-        background: #f1f1f1;
+        background: #f0f0f0;
+        border-left: 1px solid #d4d4d4;
       }
 
-      .search-icon svg {
+      .search-icon-box svg {
         width: 18px;
         height: 18px;
+        stroke: #2b2b2b;
       }
 
       .actions {
@@ -120,18 +123,20 @@
 
       .icon-btn {
         position: relative;
+        border-radius: 50%;
         width: 40px;
         height: 40px;
-        border-radius: 50%;
-        background: #f4f4f4;
         display: grid;
         place-items: center;
+        background: #f4f4f4;
         border: 1px solid #d8d8d8;
+        cursor: pointer;
       }
 
       .icon-btn svg {
         width: 18px;
         height: 18px;
+        stroke: #222;
       }
 
       .badge {
@@ -140,55 +145,101 @@
         right: -2px;
         min-width: 18px;
         height: 18px;
+        padding: 0 5px;
         border-radius: 999px;
-        background: #db0f0f;
+        background: #e53935;
         color: white;
         font-size: 11px;
         font-weight: 700;
         display: grid;
         place-items: center;
-        padding: 0 5px;
       }
 
-      .avatar {
+      .profile {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         overflow: hidden;
-        border: 2px solid #d9d9d9;
-        background: #e3e3e3;
+        border: 2px solid #d7d7d7;
+        background: #e5e5e5;
       }
 
-      .nav-bar {
+      .profile img {
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .nav-wrap {
+        max-width: 1280px;
+        margin: 0 auto;
         padding: 8px 20px 14px;
       }
 
       .nav-ul {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0;
         list-style: none;
         display: flex;
-        align-items: center;
         justify-content: center;
-        gap: 34px;
+        align-items: center;
+        gap: 26px;
+        padding: 0;
+        margin: 0;
+        position: relative;
       }
 
-      .nav-ul a {
+      .nav-item {
+        position: relative;
+      }
+
+      .nav-link {
+        display: inline-block;
+        padding: 8px 4px;
         font-size: 18px;
-        color: #212121;
         font-weight: 500;
+        color: #222;
+      }
+
+      .nav-link:hover {
+        color: #000;
+      }
+
+      .brand-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 180px;
+        background: white;
+        border: 1px solid #e5e5e5;
+        border-radius: 10px;
+        box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+        padding: 8px 0;
+        display: none;
+      }
+
+      .nav-item.open .brand-menu {
+        display: block;
+      }
+
+      .brand-menu a {
+        display: block;
+        padding: 10px 16px;
+        font-size: 15px;
+        color: #222;
+      }
+
+      .brand-menu a:hover {
+        background: #f5f5f5;
       }
 
       main {
-        max-width: 1200px;
+        max-width: 1280px;
         margin: 0 auto;
-        padding: 20px 16px 60px;
+        padding: 18px 18px 60px;
       }
 
       .section-label {
+        margin: 18px 0 20px;
         text-align: center;
-        margin: 18px 0 18px;
         font-size: clamp(30px, 4vw, 44px);
         font-weight: 900;
         letter-spacing: 1px;
@@ -201,62 +252,68 @@
       }
 
       .video-preview {
-        background: white;
+        background: #fff;
         border: 1px solid #ebebeb;
-        border-radius: 16px;
+        border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .video-preview:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(0,0,0,0.1);
       }
 
       .thumbnail-row {
         position: relative;
-        background: #f6f6f6;
+        background: #fafafa;
       }
 
       .thumbnail {
-        width: 100%;
         height: 220px;
         object-fit: contain;
-        background: #f3f3f3;
+        background: #f5f5f5;
       }
 
       .video-time {
         position: absolute;
         right: 12px;
         bottom: 12px;
-        background: rgba(0, 0, 0, 0.75);
-        color: white;
+        background: rgba(0,0,0,0.78);
+        color: #fff;
         font-size: 12px;
-        font-weight: 600;
-        padding: 6px 8px;
+        font-weight: 700;
         border-radius: 6px;
+        padding: 6px 8px;
       }
 
       .video-info {
-        padding: 14px 14px 18px;
+        padding: 14px 14px 16px;
       }
 
       .video-title {
         margin: 0 0 12px;
-        line-height: 1.45;
-        font-weight: 500;
+        min-height: 78px;
         font-size: 14px;
-        min-height: 72px;
+        line-height: 1.5;
+        font-weight: 500;
+        color: #1f1f1f;
       }
 
       .video-author,
       .video-stats {
         margin: 0;
-        color: #595959;
         font-size: 12px;
+        color: #5f5f5f;
       }
 
       .video-author {
-        margin-bottom: 5px;
+        margin-bottom: 4px;
       }
 
       .about-us {
-        margin-top: 30px;
+        margin-top: 34px;
         background: #fff;
         border: 1px solid #ebebeb;
         border-radius: 16px;
@@ -265,14 +322,14 @@
       }
 
       .about-us h2 {
-        margin: 0 0 14px;
+        margin: 0 0 12px;
         font-size: 30px;
       }
 
       .about-us p {
         margin: 0 0 10px;
         line-height: 1.7;
-        color: #2f2f2f;
+        color: #2d2d2d;
       }
 
       .about-us h3 {
@@ -304,13 +361,12 @@
         }
 
         .nav-ul {
-          gap: 16px;
+          gap: 12px 20px;
           flex-wrap: wrap;
         }
 
-        .search-wrap {
-          max-width: none;
-          width: min(100%, 440px);
+        .nav-link {
+          font-size: 16px;
         }
 
         .video-grid {
@@ -327,14 +383,14 @@
     <header class="header">
       <div class="header-inner">
         <div class="logo-box">
-          <span class="brand">MON SNEAKZ</span>
+          <span class="brand-text">MON SNEAKZ</span>
         </div>
 
         <div class="toolbar">
           <div class="search-wrap">
             <input type="text" placeholder="Search" />
-            <div class="search-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="search-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="6"></circle>
                 <path d="M16 16L21 21"></path>
               </svg>
@@ -343,7 +399,7 @@
 
           <div class="actions">
             <div class="icon-btn" aria-label="Cart">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="9" cy="19" r="1"></circle>
                 <circle cx="18" cy="19" r="1"></circle>
                 <path d="M2 3h3l2.4 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L18.7 7H6"></path>
@@ -351,21 +407,34 @@
               <span class="badge">3</span>
             </div>
 
-            <div class="avatar">
-              <img src="channel-pictures/my-channel.jpeg" alt="Profile" style="width:100%;height:100%;object-fit:cover;" />
+            <div class="profile">
+              <img src="channel-pictures/my-channel.jpeg" alt="Profile" />
             </div>
           </div>
         </div>
       </div>
 
-      <nav class="nav-bar">
+      <div class="nav-wrap">
         <ul class="nav-ul">
-          <li><a href="#nike">Home</a></li>
-          <li><a href="#brand">Brand</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#account">Account</a></li>
+          <li><a href="#nike" class="nav-link">Home</a></li>
+
+          <li class="nav-item" id="brandMenuItem">
+            <button type="button" class="nav-link" id="brandToggle" style="background:none;border:none;cursor:pointer;padding:8px 4px;font-weight:500;">
+              Brand
+            </button>
+            <div class="brand-menu" id="brandMenu">
+              <a href="#nike">Nike</a>
+              <a href="#adidas">Adidas</a>
+              <a href="#fila">Fila</a>
+              <a href="#jordan">Jordan</a>
+              <a href="#newbalance">New Balance</a>
+            </div>
+          </li>
+
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#account" class="nav-link">Account</a></li>
         </ul>
-      </nav>
+      </div>
     </header>
 
     <main>
@@ -373,7 +442,7 @@
       <section id="nike" class="video-grid">
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(1).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
+            <img class="thumbnail" src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
             <div class="video-time">14,975.40 $</div>
           </div>
           <div class="video-info">
@@ -385,7 +454,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(2).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
+            <img class="thumbnail" src="nike/s-l500%20(2).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -397,7 +466,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(3).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
+            <img class="thumbnail" src="nike/s-l500%20(3).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
             <div class="video-time">18,500.00 $</div>
           </div>
           <div class="video-info">
@@ -409,7 +478,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(4).webp" onerror="this.onerror=null;this.src='nike/s-l500.webp';" alt="Nike sneaker" />
+            <img class="thumbnail" src="nike/s-l500%20(4).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
             <div class="video-time">16,750.00 $</div>
           </div>
           <div class="video-info">
@@ -424,7 +493,7 @@
       <section id="adidas" class="video-grid">
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(1).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
+            <img class="thumbnail" src="nb/s-l500%20(1).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -436,7 +505,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(2).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
+            <img class="thumbnail" src="nb/s-l500%20(2).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -448,7 +517,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(3).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
+            <img class="thumbnail" src="nb/s-l500%20(3).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
             <div class="video-time">18,450.00 $</div>
           </div>
           <div class="video-info">
@@ -460,7 +529,7 @@
 
         <article class="video-preview">
           <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(4).webp" onerror="this.onerror=null;this.src='nb/s-l500.webp';" alt="Adidas sneaker" />
+            <img class="thumbnail" src="nb/s-l500%20(4).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
             <div class="video-time">19,999.00 $</div>
           </div>
           <div class="video-info">
@@ -488,5 +557,19 @@
 
       <section id="account"></section>
     </main>
+
+    <script>
+      const brandToggle = document.getElementById('brandToggle');
+      const brandMenuItem = document.getElementById('brandMenuItem');
+
+      brandToggle.addEventListener('click', function (event) {
+        event.stopPropagation();
+        brandMenuItem.classList.toggle('open');
+      });
+
+      document.addEventListener('click', function () {
+        brandMenuItem.classList.remove('open');
+      });
+    </script>
   </body>
 </html>
