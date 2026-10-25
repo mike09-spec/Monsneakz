@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MON Sneakz | Product Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: "Roboto", Arial, sans-serif;
+        background: #f3f3f3;
+        color: #1d1d1d;
+      }
+      a { text-decoration: none; color: inherit; }
+      img { display: block; width: 100%; }
+      button, select { font: inherit; }
+
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(255,255,255,0.96);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid #e4e4e4;
+      }
+
+      .header-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 12px 18px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .logo-box {
+        background: #fff;
+        border: 3px solid #111;
+        padding: 10px 18px;
+        min-width: 220px;
+        text-align: center;
+        box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+      }
+
+      .brand-text {
+        display: block;
+        font-size: clamp(18px, 2vw, 30px);
+        font-weight: 900;
+        letter-spacing: 2px;
+        line-height: 1;
+      }
+
+      .toolbar {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .search-wrap {
+        flex: 1;
+        max-width: 450px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        background: #f8f8f8;
+        border: 1px solid #d5d5d5;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .search-wrap input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 16px;
+        padding: 0 14px;
+      }
+
+      .search-icon-box {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        background: #f1f1f1;
+        border-left: 1px solid #d5d5d5;
+      }
+
+      .search-icon-box svg {
+        width: 18px;
+        height: 18px;
+        stroke: #1d1d1d;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .icon-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f4f4f4;
+        border: 1px solid #d9d9d9;
+        display: grid;
+        place-items: center;
+      }
+
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke: #212121;
+      }
+
+      .badge {
+        position: absolute;
+        top: -4px;
+        right: -2px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 999px;
+        background: #e93d3d;
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        display: grid;
+        place-items: center;
+      }
+
+      .profile {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #e5e5e5;
+        border: 2px solid #d7d7d7;
+      }
+
+      .profile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 28px 18px 60px;
+      }
+
+      .product-shell {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 26px;
+      }
+
+      .gallery-card,
+      .detail-card {
+        background: white;
+        border: 1px solid #ebebeb;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        overflow: hidden;
+      }
+
+      .gallery-main {
+        padding: 18px;
+        background: #fbfbfb;
+      }
+
+      .gallery-main img {
+        height: 430px;
+        object-fit: contain;
+        background: #f3f3f3;
+      }
+
+      .thumb-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        padding: 0 18px 18px;
+      }
+
+      .thumb {
+        border: 1px solid #ebebeb;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #f7f7f7;
+        cursor: pointer;
+      }
+
+      .thumb img {
+        height: 110px;
+        object-fit: contain;
+      }
+
+      .detail-card {
+        padding: 22px 22px 18px;
+      }
+
+      .top-badges {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .tag {
+        display: inline-block;
+        background: #fff1ef;
+        color: #f15a24;
+        border: 1px solid #ffddd2;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 10px;
+      }
+
+      .product-title {
+        font-size: clamp(24px, 2.2vw, 36px);
+        line-height: 1.3;
+        font-weight: 700;
+        margin: 0 0 14px;
+      }
+
+      .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+
+      .rating {
+        color: #f5a623;
+        font-weight: 700;
+      }
+
+      .reviews {
+        color: #3a3a3a;
+        font-size: 14px;
+      }
+
+      .price-box {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .price {
+        font-size: clamp(28px, 3vw, 42px);
+        font-weight: 900;
+        color: #f15a24;
+      }
+
+      .old-price {
+        font-size: 16px;
+        color: #999;
+        text-decoration: line-through;
+      }
+
+      .info-block {
+        background: #f9f9f9;
+        border: 1px solid #ededed;
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin-bottom: 18px;
+      }
+
+      .label {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 6px;
+      }
+
+      .value {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .option-group {
+        margin-bottom: 18px;
+      }
+
+      .option-title {
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .colors {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .color-pill {
+        padding: 10px 14px;
+        border: 1px solid #d9d9d9;
+        border-radius: 999px;
+        background: white;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .color-pill.active {
+        border-color: #f15a24;
+        background: #fff2ee;
+        color: #f15a24;
+      }
+
+      .size-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .size-pill {
+        padding: 10px 14px;
+        border: 1px solid #d9d9d9;
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .size-pill.active {
+        background: #f15a24;
+        color: white;
+        border-color: #f15a24;
+      }
+
+      .buy-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .primary-btn, .secondary-btn {
+        border: none;
+        border-radius: 12px;
+        padding: 14px 22px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .primary-btn {
+        background: #f15a24;
+        color: white;
+      }
+
+      .secondary-btn {
+        background: #eaeaea;
+        color: #1f1f1f;
+      }
+
+      .related-section {
+        margin-top: 30px;
+      }
+
+      .related-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .related-head h3 {
+        margin: 0;
+        font-size: 26px;
+      }
+
+      .related-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .related-card {
+        background: white;
+        border: 1px solid #ebebeb;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      }
+
+      .related-card img {
+        height: 220px;
+        object-fit: contain;
+        background: #f7f7f7;
+      }
+
+      .related-body {
+        padding: 14px;
+      }
+
+      .related-title {
+        margin: 0 0 10px;
+        font-size: 14px;
+        line-height: 1.5;
+        min-height: 78px;
+      }
+
+      .related-price {
+        color: #f15a24;
+        font-weight: 800;
+        font-size: 18px;
+      }
+
+      @media (max-width: 980px) {
+        .product-shell {
+          grid-template-columns: 1fr;
+        }
+        .related-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .header-inner {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .toolbar {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .search-wrap {
+          max-width: none;
+        }
+
+        .related-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo-box">
+          <span class="brand-text">MON SNEAKZ</span>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-wrap">
+            <input type="text" placeholder="Search" />
+            <div class="search-icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="6"></circle>
+                <path d="M16 16L21 21"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="actions">
+            <div class="icon-btn" aria-label="Cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="19" r="1"></circle>
+                <circle cx="18" cy="19" r="1"></circle>
+                <path d="M2 3h3l2.4 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L18.7 7H6"></path>
+              </svg>
+              <span class="badge">3</span>
+            </div>
+
+            <div class="profile">
+              <img src="channel-pictures/my-channel.jpeg" alt="Profile" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="product-shell">
+        <div class="gallery-card">
+          <div class="gallery-main">
+            <img src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
+          </div>
+          <div class="thumb-row">
+            <div class="thumb"><img src="nike/s-l500%20(1).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
+            <div class="thumb"><img src="nike/s-l500%20(2).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
+            <div class="thumb"><img src="nike/s-l500%20(3).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
+            <div class="thumb"><img src="nike/s-l500%20(4).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="top-badges">
+            <span class="tag">New Arrival</span>
+            <span class="tag">Best Seller</span>
+          </div>
+
+          <h1 class="product-title">Giannis Immortality 3 EP Basketball Shoes Triple White Size 6.5 US MENS</h1>
+
+          <div class="meta-row">
+            <span class="rating">★★★★★</span>
+            <span class="reviews">4.9 (2,304 reviews)</span>
+          </div>
+
+          <div class="price-box">
+            <span class="price">19,999.00 $</span>
+            <span class="old-price">24,500.00 $</span>
+          </div>
+
+          <div class="info-block">
+            <div class="label">Delivery</div>
+            <div class="value">Free shipping · 2–4 days</div>
+          </div>
+
+          <div class="option-group">
+            <div class="option-title">Color</div>
+            <div class="colors">
+              <button class="color-pill active" type="button">White</button>
+              <button class="color-pill" type="button">Black</button>
+              <button class="color-pill" type="button">Purple</button>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <div class="option-title">Size</div>
+            <div class="size-row">
+              <button class="size-pill active" type="button">6.5</button>
+              <button class="size-pill" type="button">7</button>
+              <button class="size-pill" type="button">8</button>
+              <button class="size-pill" type="button">9</button>
+              <button class="size-pill" type="button">10</button>
+              <button class="size-pill" type="button">11</button>
+            </div>
+          </div>
+
+          <div class="buy-row">
+            <button class="primary-btn">Buy Now</button>
+            <button class="secondary-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <div class="related-head">
+          <h3>Related Products</h3>
+        </div>
+
+        <div class="related-grid">
+          <article class="related-card">
+            <img src="nike/s-l500%20(3).webp" alt="Related product" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
+            <div class="related-body">
+              <p class="related-title">Nike G.T Cut EP Blue Fury Tangerine Tint Men Basketball Shoes DV2918-404</p>
+              <div class="related-price">18,500.00 $</div>
+            </div>
+          </article>
+
+          <article class="related-card">
+            <img src="nike/s-l500%20(4).webp" alt="Related product" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
+            <div class="related-body">
+              <p class="related-title">Nike KD Trey 5 X EP Black Volt White Men Basketball Hoopers Shoes DJ7554-007</p>
+              <div class="related-price">16,750.00 $</div>
+            </div>
+          </article>
+
+          <article class="related-card">
+            <img src="nb/s-l500%20(1).webp" alt="Related product" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
+            <div class="related-body">
+              <p class="related-title">Harden Vol. 8 Miami Nights Men Basketball Shoes JQ2393</p>
+              <div class="related-price">19,999.00 $</div>
+            </div>
+          </article>
+
+          <article class="related-card">
+            <img src="nb/s-l500%20(2).webp" alt="Related product" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
+            <div class="related-body">
+              <p class="related-title">Harden Vol 6 J Boost Basketball Shoes Mens Size 5 Black NWT GZ2012</p>
+              <div class="related-price">19,999.00 $</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
