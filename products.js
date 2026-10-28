@@ -421,6 +421,91 @@ function initCheckoutButton() {
   });
 }
 
+function toDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Could not read image file'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function readSelectedImages(fileInput) {
+  const files = fileInput && fileInput.files ? Array.from(fileInput.files) : [];
+  const validFiles = files.filter((file) => file && file.type && file.type.startsWith('image/'));
+
+  if (!validFiles.length) {
+    return [];
+  }
+
+  const results = [];
+  for (const file of validFiles) {
+    results.push(await toDataUrl(file));
+  }
+  return results;
+}
+
+function renderImagePreviews(imageUrls) {
+  const previewRow = document.getElementById('imagePreviewRow');
+  if (!previewRow) return;
+
+  previewRow.innerHTML = imageUrls.map((url, index) => `
+    <div class="preview-image">
+      <img src="${url}" alt="Preview ${index + 1}" />
+      <button type="button" class="remove-preview" data-index="${index}">×</button>
+    </div>
+  `).join('');
+
+  previewRow.querySelectorAll('.remove-preview').forEach((button) => {
+    button.addEventListener('click', () => {
+      const indexToRemove = Number(button.dataset.index);
+      const input = document.getElementById('sellerImage');
+      const currentFiles = input && input.files ? Array.from(input.files) : [];
+      const remaining = currentFiles.filter((_, index) => index !== indexToRemove);
+
+      const dataTransfer = new DataTransfer();
+      remaining.forEach((file) => dataTransfer.items.add(file));
+      input.files = dataTransfer.files;
+
+      if (!remaining.length) {
+        renderImagePreviews([]);
+        return;
+      }
+
+      const newPreviewUrls = [];
+      Array.from(input.files).forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          newPreviewUrls.push(reader.result);
+          if (newPreviewUrls.length === input.files.length) {
+            renderImagePreviews(newPreviewUrls);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  });
+}
+
+function initSellerImageSelector() {
+  const input = document.getElementById('sellerImage');
+  const clearButton = document.getElementById('clearImageSelection');
+
+  if (!input) return;
+
+  input.addEventListener('change', async () => {
+    const selected = await readSelectedImages(input);
+    renderImagePreviews(selected);
+  });
+
+  if (clearButton) {
+    clearButton.addEventListener('click', () => {
+      input.value = '';
+      renderImagePreviews([]);
+    });
+  }
+}
+
 function initSellerLogin() {
   const loginForm = document.getElementById('sellerLoginForm');
   const sellerDashboard = document.getElementById('sellerDashboard');
@@ -447,15 +532,6 @@ function initSellerLogin() {
   });
 }
 
-function toDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(new Error('Could not read image file'));
-    reader.readAsDataURL(file);
-  });
-}
-
 function renderSellerDashboard() {
   const list = document.getElementById('sellerProductList');
   const sessionBadge = document.getElementById('sellerSessionBadge');
@@ -472,9 +548,8 @@ function renderSellerDashboard() {
       event.preventDefault();
 
       const fileInput = document.getElementById('sellerImage');
-      const file = fileInput && fileInput.files && fileInput.files[0];
-      const imagePath = file ? await toDataUrl(file) : 'nike/s-l500.webp';
-
+      const selectedImages = await readSelectedImages(fileInput);
+      const gallery = selectedImages.length ? selectedImages : ['nike/s-l500.webp'];
       const product = {
         id: `seller-${Date.now()}`,
         brand: document.getElementById('sellerBrand').value.trim() || 'Seller Brand',
@@ -482,8 +557,8 @@ function renderSellerDashboard() {
         name: document.getElementById('sellerName').value.trim(),
         price: Number(document.getElementById('sellerPrice').value || 0),
         oldPrice: Number(document.getElementById('sellerOldPrice').value || 0),
-        image: imagePath,
-        gallery: [imagePath],
+        image: gallery[0],
+        gallery,
         colors: ['Default'],
         sizes: ['8'],
         sellerAdded: true
@@ -495,6 +570,7 @@ function renderSellerDashboard() {
       current.push(product);
       saveSellerProducts(current);
       form.reset();
+      renderImagePreviews([]);
       renderSellerDashboard();
     });
   }
@@ -553,6 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (page === 'seller') {
     initSellerLogin();
+    initSellerImageSelector();
     renderSellerDashboard();
   }
 
