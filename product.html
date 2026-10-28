@@ -138,6 +138,7 @@
         font-weight: 700;
         display: grid;
         place-items: center;
+        line-height: 1;
       }
 
       .profile {
@@ -153,6 +154,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+      }
+
+      .nav-link {
+        color: #1d1d1d;
+        font-weight: 600;
       }
 
       main {
@@ -188,13 +194,15 @@
       }
 
       .thumb-row {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        display: flex;
+        flex-wrap: wrap;
         gap: 10px;
         padding: 0 16px 16px;
       }
 
       .thumb {
+        flex: 1 1 70px;
+        min-width: 70px;
         border: 1px solid #ebebeb;
         border-radius: 10px;
         overflow: hidden;
@@ -222,6 +230,7 @@
         align-items: center;
         gap: 8px;
         margin-bottom: 10px;
+        flex-wrap: wrap;
       }
 
       .tag {
@@ -247,6 +256,7 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 14px;
+        flex-wrap: wrap;
       }
 
       .rating { color: #f5a623; font-weight: 700; }
@@ -257,6 +267,7 @@
         align-items: baseline;
         gap: 10px;
         margin-bottom: 14px;
+        flex-wrap: wrap;
       }
 
       .price {
@@ -299,7 +310,8 @@
         margin-bottom: 8px;
       }
 
-      .colors {
+      .colors,
+      .size-row {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
@@ -322,13 +334,6 @@
         color: #f15a24;
       }
 
-      .size-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 8px;
-      }
-
       .size-pill {
         border-radius: 10px;
       }
@@ -343,6 +348,7 @@
         display: flex;
         gap: 10px;
         margin-top: 16px;
+        flex-wrap: wrap;
       }
 
       .primary-btn, .secondary-btn {
@@ -380,12 +386,15 @@
       }
 
       .related-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         gap: 16px;
       }
 
       .related-card {
+        flex: 1 1 220px;
+        max-width: calc(25% - 12px);
+        min-width: 200px;
         background: white;
         border: 1px solid #ebebeb;
         border-radius: 14px;
@@ -416,23 +425,20 @@
         font-size: 16px;
       }
 
-      @media (min-width: 1400px) {
-        .related-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      }
-
       @media (max-width: 980px) {
         .product-shell { grid-template-columns: 1fr; }
+        .related-card { max-width: calc(50% - 8px); }
       }
 
       @media (max-width: 720px) {
         .header-inner { flex-wrap: wrap; justify-content: center; }
         .toolbar { width: 100%; justify-content: center; }
         .search-wrap { max-width: none; }
-        .related-grid { grid-template-columns: 1fr; }
+        .related-card { max-width: 100%; flex-basis: 100%; }
       }
     </style>
   </head>
-  <body>
+  <body data-page="product">
     <header class="header">
       <div class="header-inner">
         <div class="logo-box">
@@ -451,15 +457,15 @@
           </div>
 
           <div class="actions">
-            <div class="icon-btn" aria-label="Cart">
+            <a href="cart.html" class="icon-btn" aria-label="Cart">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="9" cy="19" r="1"></circle>
                 <circle cx="18" cy="19" r="1"></circle>
                 <path d="M2 3h3l2.4 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L18.7 7H6"></path>
               </svg>
-              <span class="badge">3</span>
-            </div>
-
+              <span class="badge" data-cart-count>0</span>
+            </a>
+            <a href="seller.html" class="nav-link">Seller</a>
             <div class="profile">
               <img src="channel-pictures/my-channel.jpeg" alt="Profile" />
             </div>
@@ -468,18 +474,13 @@
       </div>
     </header>
 
-    <main>
+    <main id="productDetail">
       <div class="product-shell">
         <div class="gallery-card">
           <div class="gallery-main">
             <img id="main-product-image" src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
           </div>
-          <div class="thumb-row">
-            <div class="thumb active"><img src="nike/s-l500%20(1).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
-            <div class="thumb"><img src="nike/s-l500%20(2).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
-            <div class="thumb"><img src="nike/s-l500%20(3).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
-            <div class="thumb"><img src="nike/s-l500%20(4).webp" alt="thumb" onerror="this.onerror=null;this.src='nike/s-l500.webp';" /></div>
-          </div>
+          <div class="thumb-row" id="productGallery"></div>
         </div>
 
         <div class="detail-card">
@@ -488,7 +489,7 @@
             <span class="tag">Best Seller</span>
           </div>
 
-          <h1 class="product-title">Giannis Immortality 3 EP Basketball Shoes Triple White Size 6.5 US MENS</h1>
+          <h1 class="product-title" id="productTitle">Giannis Immortality 3 EP Basketball Shoes Triple White Size 6.5 US MENS</h1>
 
           <div class="meta-row">
             <span class="rating">★★★★★</span>
@@ -496,8 +497,8 @@
           </div>
 
           <div class="price-box">
-            <span class="price">19,999.00 $</span>
-            <span class="old-price">24,500.00 $</span>
+            <span class="price" id="productPrice">19,999.00 $</span>
+            <span class="old-price" id="productOldPrice">24,500.00 $</span>
           </div>
 
           <div class="info-block">
@@ -527,8 +528,8 @@
           </div>
 
           <div class="buy-row">
-            <button class="primary-btn">Buy Now</button>
-            <button class="secondary-btn">Add to Cart</button>
+            <button class="primary-btn" id="buyNowBtn" type="button">Buy Now</button>
+            <button class="secondary-btn" id="addToCartBtn" type="button">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -538,48 +539,14 @@
           <h3>Related Products</h3>
         </div>
 
-        <div class="related-grid">
-          <article class="related-card">
-            <img src="nike/s-l500%20(3).webp" alt="Related product" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
-            <div class="related-body">
-              <p class="related-title">Nike G.T Cut EP Blue Fury Tangerine Tint Men Basketball Shoes DV2918-404</p>
-              <div class="related-price">18,500.00 $</div>
-            </div>
-          </article>
-
-          <article class="related-card">
-            <img src="nike/s-l500%20(4).webp" alt="Related product" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
-            <div class="related-body">
-              <p class="related-title">Nike KD Trey 5 X EP Black Volt White Men Basketball Hoopers Shoes DJ7554-007</p>
-              <div class="related-price">16,750.00 $</div>
-            </div>
-          </article>
-
-          <article class="related-card">
-            <img src="nb/s-l500%20(1).webp" alt="Related product" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
-            <div class="related-body">
-              <p class="related-title">Harden Vol. 8 Miami Nights Men Basketball Shoes JQ2393</p>
-              <div class="related-price">19,999.00 $</div>
-            </div>
-          </article>
-
-          <article class="related-card">
-            <img src="nb/s-l500%20(2).webp" alt="Related product" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
-            <div class="related-body">
-              <p class="related-title">Harden Vol 6 J Boost Basketball Shoes Mens Size 5 Black NWT GZ2012</p>
-              <div class="related-price">19,999.00 $</div>
-            </div>
-          </article>
-        </div>
+        <div class="related-grid" id="relatedGrid"></div>
       </div>
     </main>
 
+    <script src="products.js"></script>
     <script>
       const colorButtons = document.querySelectorAll('.color-pill');
       const sizeButtons = document.querySelectorAll('.size-pill');
-      const thumbs = document.querySelectorAll('.thumb');
-      const mainImage = document.getElementById('main-product-image');
-
       colorButtons.forEach((button) => {
         button.addEventListener('click', () => {
           colorButtons.forEach((btn) => btn.classList.remove('active'));
@@ -594,17 +561,12 @@
         });
       });
 
-      thumbs.forEach((thumb) => {
-        thumb.addEventListener('click', () => {
-          thumbs.forEach((item) => item.classList.remove('active'));
-          thumb.classList.add('active');
-          const img = thumb.querySelector('img');
-          if (img) {
-            mainImage.src = img.src;
-            mainImage.alt = img.alt;
-          }
+      const buyNowBtn = document.getElementById('buyNowBtn');
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', () => {
+          window.location.href = 'cart.html';
         });
-      });
+      }
     </script>
   </body>
 </html>

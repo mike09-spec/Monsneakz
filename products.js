@@ -186,8 +186,8 @@ function getAllProducts() {
 }
 
 function getProductById(productId) {
-  const allProducts = getAllProducts();
-  return allProducts.find((product) => product.id === productId) || allProducts[0];
+  const all = getAllProducts();
+  return all.find((product) => product.id === productId) || all[0];
 }
 
 function formatPrice(value) {
@@ -219,13 +219,13 @@ function updateCartBadge() {
 
 function addToCart(productId) {
   const product = getProductById(productId);
-  if (!product) return;
+  if (!product) return [];
 
   const cart = getCart();
-  const found = cart.find((item) => item.id === product.id);
+  const existing = cart.find((item) => item.id === product.id);
 
-  if (found) {
-    found.quantity += 1;
+  if (existing) {
+    existing.quantity += 1;
   } else {
     cart.push({
       id: product.id,
@@ -236,13 +236,6 @@ function addToCart(productId) {
     });
   }
 
-  saveCart(cart);
-  updateCartBadge();
-  return cart;
-}
-
-function removeCartItem(productId) {
-  const cart = getCart().filter((item) => item.id !== productId);
   saveCart(cart);
   updateCartBadge();
   return cart;
@@ -260,8 +253,12 @@ function changeCartQuantity(productId, delta) {
   return filtered;
 }
 
-function createProductCard(product) {
-  return `
+function renderGridByCategory(category) {
+  const products = getAllProducts().filter((product) => product.category === category);
+  const gridId = category === 'Nike' ? 'productGridNike' : category === 'New Balance' ? 'productGridNewBalance' : 'productGrid';
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.innerHTML = products.map((product) => `
     <a href="product.html?id=${product.id}" class="video-preview" aria-label="View ${product.name}">
       <div class="thumbnail-row">
         <img class="thumbnail" src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
@@ -273,15 +270,7 @@ function createProductCard(product) {
         <p class="video-stats">141M views · 1 year ago</p>
       </div>
     </a>
-  `;
-}
-
-function renderGridByCategory(category) {
-  const allProducts = getAllProducts();
-  const items = category ? allProducts.filter((product) => product.category === category) : allProducts;
-  const grid = document.getElementById(category ? `productGrid${category.replace(/\s+/g, '')}` : 'productGrid');
-  if (!grid) return;
-  grid.innerHTML = items.map(createProductCard).join('');
+  `).join('');
 }
 
 function renderHomePage() {
@@ -296,34 +285,31 @@ function renderProductDetail() {
 
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('id');
-  const selectedProduct = getProductById(productId) || getAllProducts()[0];
+  const selected = getProductById(productId) || getAllProducts()[0];
 
   const mainImage = document.getElementById('main-product-image');
   const title = document.getElementById('productTitle');
-  const price = document.getElementById('productPrice');
-  const oldPrice = document.getElementById('productOldPrice');
+  const priceElm = document.getElementById('productPrice');
+  const oldPriceElm = document.getElementById('productOldPrice');
   const gallery = document.getElementById('productGallery');
   const relatedGrid = document.getElementById('relatedGrid');
   const addToCartButton = document.getElementById('addToCartBtn');
 
   if (mainImage) {
-    mainImage.src = selectedProduct.gallery[0];
-    mainImage.alt = selectedProduct.name;
+    mainImage.src = selected.gallery[0];
+    mainImage.alt = selected.name;
   }
 
-  if (title) title.textContent = selectedProduct.name;
-  if (price) price.textContent = formatPrice(selectedProduct.price);
-  if (oldPrice) oldPrice.textContent = formatPrice(selectedProduct.oldPrice || selectedProduct.price);
+  if (title) title.textContent = selected.name;
+  if (priceElm) priceElm.textContent = formatPrice(selected.price);
+  if (oldPriceElm) oldPriceElm.textContent = formatPrice(selected.oldPrice || selected.price);
 
   if (gallery) {
-    gallery.innerHTML = selectedProduct.gallery.map((image, index) => {
-      const isActive = index === 0 ? 'active' : '';
-      return `
-        <div class="thumb ${isActive}" data-image="${image}">
-          <img src="${image}" alt="${selectedProduct.name} thumbnail ${index + 1}" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
-        </div>
-      `;
-    }).join('');
+    gallery.innerHTML = selected.gallery.map((image, index) => `
+      <div class="thumb ${index === 0 ? 'active' : ''}" data-image="${image}">
+        <img src="${image}" alt="${selected.name} thumbnail ${index + 1}" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
+      </div>
+    `).join('');
 
     gallery.querySelectorAll('.thumb').forEach((thumb) => {
       thumb.addEventListener('click', () => {
@@ -331,14 +317,14 @@ function renderProductDetail() {
         thumb.classList.add('active');
         if (mainImage) {
           mainImage.src = thumb.dataset.image;
-          mainImage.alt = selectedProduct.name;
+          mainImage.alt = selected.name;
         }
       });
     });
   }
 
   if (relatedGrid) {
-    const relatedProducts = getAllProducts().filter((product) => product.id !== selectedProduct.id).slice(0, 4);
+    const relatedProducts = getAllProducts().filter((product) => product.id !== selected.id).slice(0, 4);
     relatedGrid.innerHTML = relatedProducts.map((product) => `
       <article class="related-card">
         <a href="product.html?id=${product.id}">
@@ -354,11 +340,11 @@ function renderProductDetail() {
 
   if (addToCartButton) {
     addToCartButton.onclick = () => {
-      addToCart(selectedProduct.id);
-      addToCartButton.textContent = 'Added to Cart';
+      addToCart(selected.id);
+      addToCartButton.textContent = 'Added';
       setTimeout(() => {
         addToCartButton.textContent = 'Add to Cart';
-      }, 1000);
+      }, 900);
     };
   }
 
@@ -368,12 +354,15 @@ function renderProductDetail() {
 function renderCartPage() {
   const cartTable = document.getElementById('cartItems');
   const totalBox = document.getElementById('cartTotal');
-  if (!cartTable || !totalBox) return;
+  const totalFinalBox = document.getElementById('cartTotalFinal');
+
+  if (!cartTable || !totalBox || !totalFinalBox) return;
 
   const cart = getCart();
   if (!cart.length) {
     cartTable.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
     totalBox.textContent = '0.00 $';
+    totalFinalBox.textContent = '0.00 $';
     return;
   }
 
@@ -383,7 +372,7 @@ function renderCartPage() {
         <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
         <div>
           <strong>${item.name}</strong>
-          <p>Qty: ${item.quantity}</p>
+          <p>${formatPrice(item.price)}</p>
         </div>
       </div>
       <div class="cart-controls">
@@ -410,26 +399,73 @@ function renderCartPage() {
 
   const total = cart.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 1), 0);
   totalBox.textContent = formatPrice(total);
+  totalFinalBox.textContent = formatPrice(total);
+  updateCartBadge();
+}
+
+function initCheckoutButton() {
+  const checkoutButton = document.getElementById('checkoutButton');
+  if (!checkoutButton) return;
+
+  checkoutButton.addEventListener('click', () => {
+    const cart = getCart();
+    if (!cart.length) {
+      alert('Your cart is empty.');
+      return;
+    }
+
+    saveCart([]);
+    updateCartBadge();
+    renderCartPage();
+    alert('Purchase complete! Your order is ready.');
+  });
+}
+
+function initSellerLogin() {
+  const loginForm = document.getElementById('sellerLoginForm');
+  const sellerDashboard = document.getElementById('sellerDashboard');
+  const sellerLoginCard = document.getElementById('sellerLoginCard');
+  if (!loginForm) return;
+
+  const session = localStorage.getItem(STORAGE_KEYS.sellerSession);
+  const isLoggedIn = !!session;
+
+  if (sellerLoginCard) sellerLoginCard.style.display = isLoggedIn ? 'none' : 'block';
+  if (sellerDashboard) sellerDashboard.style.display = isLoggedIn ? 'block' : 'none';
+
+  loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const username = document.getElementById('sellerUsername').value.trim();
+    const password = document.getElementById('sellerPassword').value.trim();
+
+    if (username === 'seller' && password === 'monsneakz123') {
+      localStorage.setItem(STORAGE_KEYS.sellerSession, username);
+      window.location.reload();
+    } else {
+      alert('Invalid seller credentials. Use: seller / monskeakz123');
+    }
+  });
 }
 
 function renderSellerDashboard() {
-  const form = document.getElementById('sellerProductForm');
   const list = document.getElementById('sellerProductList');
-  const session = document.getElementById('sellerSessionBadge');
+  const sessionBadge = document.getElementById('sellerSessionBadge');
+  const form = document.getElementById('sellerProductForm');
   const logoutButton = document.getElementById('logoutSeller');
 
-  if (session) {
-    const activeUser = localStorage.getItem(STORAGE_KEYS.sellerSession);
-    session.textContent = activeUser ? `Logged in as: ${activeUser}` : 'Seller account not active';
+  if (sessionBadge) {
+    const user = localStorage.getItem(STORAGE_KEYS.sellerSession);
+    sessionBadge.textContent = user ? `Logged in: ${user}` : 'Not logged in';
   }
 
   if (form) {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
+
       const product = {
         id: `seller-${Date.now()}`,
         brand: document.getElementById('sellerBrand').value.trim() || 'Seller Brand',
-        category: document.getElementById('sellerCategory').value.trim() || 'Nike',
+        category: document.getElementById('sellerCategory').value || 'Nike',
         name: document.getElementById('sellerName').value.trim(),
         price: Number(document.getElementById('sellerPrice').value || 0),
         oldPrice: Number(document.getElementById('sellerOldPrice').value || 0),
@@ -444,9 +480,9 @@ function renderSellerDashboard() {
 
       if (!product.name) return;
 
-      const items = getSellerProducts();
-      items.push(product);
-      saveSellerProducts(items);
+      const current = getSellerProducts();
+      current.push(product);
+      saveSellerProducts(current);
       form.reset();
       renderSellerDashboard();
     });
@@ -455,25 +491,25 @@ function renderSellerDashboard() {
   if (list) {
     const items = getSellerProducts();
     if (!items.length) {
-      list.innerHTML = '<p>No seller products yet.</p>';
+      list.innerHTML = '<p>No products added yet.</p>';
       return;
     }
 
     list.innerHTML = items.map((product) => `
       <div class="seller-product-item">
         <div>
-          <strong>${product.name}</strong>
+          <strong>${product.name}</strong><br />
           <span>${formatPrice(product.price)}</span>
         </div>
-        <button class="danger-btn" data-delete-id="${product.id}">Delete</button>
+        <button class="danger-btn" data-delete-id="${product.id}" type="button">Delete</button>
       </div>
     `).join('');
 
     list.querySelectorAll('[data-delete-id]').forEach((button) => {
       button.addEventListener('click', () => {
         const id = button.dataset.deleteId;
-        const nextItems = getSellerProducts().filter((item) => item.id !== id);
-        saveSellerProducts(nextItems);
+        const next = getSellerProducts().filter((item) => item.id !== id);
+        saveSellerProducts(next);
         renderSellerDashboard();
       });
     });
@@ -487,84 +523,40 @@ function renderSellerDashboard() {
   }
 }
 
-function initSellerLogin() {
-  const loginForm = document.getElementById('sellerLoginForm');
-  if (!loginForm) return;
-
-  const isLoggedIn = !!localStorage.getItem(STORAGE_KEYS.sellerSession);
-  const sellerDashboard = document.getElementById('sellerDashboard');
-  const sellerLoginCard = document.getElementById('sellerLoginCard');
-
-  if (isLoggedIn) {
-    if (sellerLoginCard) sellerLoginCard.style.display = 'none';
-    if (sellerDashboard) sellerDashboard.style.display = 'block';
-  } else {
-    if (sellerLoginCard) sellerLoginCard.style.display = 'block';
-    if (sellerDashboard) sellerDashboard.style.display = 'none';
-  }
-
-  loginForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const username = document.getElementById('sellerUsername').value.trim();
-    const password = document.getElementById('sellerPassword').value.trim();
-
-    if (username && password) {
-      localStorage.setItem(STORAGE_KEYS.sellerSession, username);
-      window.location.reload();
-    }
-  });
-}
-
-function initCheckoutButton() {
-  const checkoutButton = document.getElementById('checkoutButton');
-  if (!checkoutButton) return;
-
-  checkoutButton.addEventListener('click', () => {
-    const cart = getCart();
-    if (!cart.length) {
-      alert('Your cart is empty.');
-      return;
-    }
-
-    localStorage.removeItem(STORAGE_KEYS.cart);
-    updateCartBadge();
-    alert('Order placed successfully!');
-    window.location.href = 'first.html';
-  });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.body.dataset.page === 'home') {
+  updateCartBadge();
+
+  const page = document.body.dataset.page;
+  if (page === 'home') {
     renderHomePage();
   }
 
-  if (document.body.dataset.page === 'product') {
+  if (page === 'product') {
     renderProductDetail();
   }
 
-  if (document.body.dataset.page === 'cart') {
+  if (page === 'cart') {
     renderCartPage();
     initCheckoutButton();
   }
 
-  if (document.body.dataset.page === 'seller') {
+  if (page === 'seller') {
     initSellerLogin();
     renderSellerDashboard();
   }
 
-  updateCartBadge();
-
-  const addToCartButtons = document.querySelectorAll('[data-add-to-cart]');
-  addToCartButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const productId = button.dataset.addToCart;
-      addToCart(productId);
-      button.textContent = 'Added';
-      setTimeout(() => {
-        button.textContent = 'Add to Cart';
-      }, 1000);
+  const brandToggle = document.getElementById('brandToggle');
+  const brandMenuItem = document.getElementById('brandMenuItem');
+  if (brandToggle && brandMenuItem) {
+    brandToggle.addEventListener('click', function (event) {
+      event.stopPropagation();
+      brandMenuItem.classList.toggle('open');
     });
-  });
+
+    document.addEventListener('click', function () {
+      brandMenuItem.classList.remove('open');
+    });
+  }
 });
 
 window.MON_SNEAKZ_PRODUCTS = getAllProducts();
@@ -575,8 +567,6 @@ window.MON_SNEAKZ = {
   getProductById,
   addToCart,
   getCart,
-  saveCart,
-  removeCartItem,
   changeCartQuantity,
   renderHomePage,
   renderProductDetail,

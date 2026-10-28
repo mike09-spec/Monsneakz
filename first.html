@@ -145,6 +145,7 @@
         font-weight: 700;
         display: grid;
         place-items: center;
+        line-height: 1;
       }
 
       .profile {
@@ -176,6 +177,7 @@
         gap: 20px;
         margin: 0;
         padding: 0;
+        flex-wrap: wrap;
       }
 
       .nav-item { position: relative; }
@@ -327,12 +329,16 @@
       }
 
       .video-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         gap: 16px;
+        margin-bottom: 18px;
       }
 
       .video-preview {
+        flex: 1 1 260px;
+        min-width: 220px;
+        max-width: calc(25% - 12px);
         display: flex;
         flex-direction: column;
         background: var(--panel);
@@ -430,8 +436,8 @@
         color: var(--muted);
       }
 
-      @media (min-width: 1400px) {
-        .video-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      @media (max-width: 1100px) {
+        .video-preview { max-width: calc(33.333% - 11px); }
       }
 
       @media (max-width: 780px) {
@@ -459,26 +465,21 @@
           right: auto;
           bottom: auto;
         }
+
+        .video-preview { max-width: calc(50% - 8px); }
       }
 
-      @media (max-width: 720px) {
-        .nav-ul {
-          flex-wrap: wrap;
-          gap: 10px 18px;
+      @media (max-width: 520px) {
+        .video-grid { gap: 12px; }
+        .video-preview {
+          flex: 1 1 100%;
+          max-width: 100%;
         }
-
-        .nav-link { font-size: 14px; }
-
-        .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      }
-
-      @media (max-width: 480px) {
-        .video-grid { grid-template-columns: 1fr; }
         .thumbnail { height: 180px; }
       }
     </style>
   </head>
-  <body>
+  <body data-page="home">
     <header class="header">
       <div class="header-inner">
         <div class="logo-box">
@@ -497,14 +498,16 @@
           </div>
 
           <div class="actions">
-            <div class="icon-btn" aria-label="Cart">
+            <a href="cart.html" class="icon-btn" aria-label="Cart">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="9" cy="19" r="1"></circle>
                 <circle cx="18" cy="19" r="1"></circle>
                 <path d="M2 3h3l2.4 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L18.7 7H6"></path>
               </svg>
-              <span class="badge">3</span>
-            </div>
+              <span class="badge" data-cart-count>0</span>
+            </a>
+
+            <a href="seller.html" class="nav-link">Seller</a>
 
             <div class="profile">
               <img src="channel-pictures/my-channel.jpeg" alt="Profile" />
@@ -516,22 +519,19 @@
       <div class="nav-wrap">
         <ul class="nav-ul">
           <li><a href="#home" class="nav-link">Home</a></li>
-
           <li class="nav-item" id="brandMenuItem">
             <button type="button" class="nav-link" id="brandToggle" style="background:none;border:none;cursor:pointer;padding:6px 4px;">
               Brand
             </button>
             <div class="brand-menu" id="brandMenu">
               <a href="#nike">Nike</a>
-              <a href="#adidas">Adidas</a>
-              <a href="#fila">Fila</a>
-              <a href="#jordan">Jordan</a>
               <a href="#newbalance">New Balance</a>
+              <a href="seller.html">Seller Portal</a>
             </div>
           </li>
-
           <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#account" class="nav-link">Account</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="seller.html" class="nav-link">Seller Account</a></li>
         </ul>
       </div>
     </header>
@@ -556,110 +556,14 @@
 
     <main>
       <h1 class="section-label" id="nike">Nike</h1>
-      <section class="video-grid">
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(1).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
-            <div class="video-time">14,975.40 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Nike Kobe 5 Protro Year of the Mamba Eggplant Size 11 Men Basketball Shoes</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
+      <section id="productGridNike" class="video-grid"></section>
 
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(2).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Giannis Immortality 3 EP Basketball Shoes Triple White Size 6.5 US MENS</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
-
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(3).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
-            <div class="video-time">18,500.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Nike G.T Cut EP Blue Fury Tangerine Tint Men Basketball Shoes DV2918-404</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
-
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nike/s-l500%20(4).webp" alt="Nike sneaker" onerror="this.onerror=null;this.src='nike/s-l500.webp';" />
-            <div class="video-time">16,750.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Nike KD Trey 5 X EP Black Volt White Men Basketball Hoopers Shoes DJ7554-007</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
-      </section>
-
-      <h1 class="section-label" id="adidas">Adidas</h1>
-      <section class="video-grid">
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(1).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Harden Vol. 8 Miami Nights Men Basketball Shoes JQ2393</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
-
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(2).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Harden Vol 6 J Boost Basketball Shoes Mens Size 5 Black NWT GZ2012</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
-
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(3).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
-            <div class="video-time">18,450.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Anthony Edwards AE1 Ascent Pack Black Grey Men Basketball IG6668</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
-
-        <a href="product.html" class="video-preview">
-          <div class="thumbnail-row">
-            <img class="thumbnail" src="nb/s-l500%20(4).webp" alt="Adidas sneaker" onerror="this.onerror=null;this.src='nb/s-l500.webp';" />
-            <div class="video-time">19,999.00 $</div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Harden Volume 9 Cyber Metallic *NEW*</p>
-            <p class="video-author">MON Sneakz</p>
-            <p class="video-stats">141M views · 1 year ago</p>
-          </div>
-        </a>
-      </section>
+      <h1 class="section-label" id="newbalance">New Balance</h1>
+      <section id="productGridNewBalance" class="video-grid"></section>
 
       <section class="about-us" id="about">
         <h2>About Us</h2>
-        <p>Welcome to MON Sneakz, your ultimate destination for premium sneakers and footwear. We are passionate about bringing you the latest and most sought-after designs from top brands like Nike, Adidas, Jordan, and New Balance.</p>
+        <p>Welcome to MON Sneakz, your ultimate destination for premium sneakers and footwear. We are passionate about bringing you the latest and most sought-after designs from top brands like Nike, Adidas, Jordan, Fila, and New Balance.</p>
         <p>At MON Sneakz, we believe sneakers are more than just shoes—they are a statement of style, individuality, and culture.</p>
         <p>Thank you for choosing MON Sneakz. We look forward to being a part of your sneaker journey!</p>
 
@@ -671,24 +575,10 @@
           <li><strong>Facebook:</strong> <a href="https://facebook.com/monsneakz" target="_blank" rel="noreferrer">MON Sneakz</a></li>
         </ul>
       </section>
-
-      <div id="account"></div>
     </main>
 
     <footer>© 2026 MON Sneakz. Built for the next drop.</footer>
 
-    <script>
-      const brandToggle = document.getElementById('brandToggle');
-      const brandMenuItem = document.getElementById('brandMenuItem');
-
-      brandToggle.addEventListener('click', function (event) {
-        event.stopPropagation();
-        brandMenuItem.classList.toggle('open');
-      });
-
-      document.addEventListener('click', function () {
-        brandMenuItem.classList.remove('open');
-      });
-    </script>
+    <script src="products.js"></script>
   </body>
 </html>
