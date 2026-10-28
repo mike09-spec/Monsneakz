@@ -447,6 +447,15 @@ function initSellerLogin() {
   });
 }
 
+function toDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Could not read image file'));
+    reader.readAsDataURL(file);
+  });
+}
+
 function renderSellerDashboard() {
   const list = document.getElementById('sellerProductList');
   const sessionBadge = document.getElementById('sellerSessionBadge');
@@ -459,8 +468,12 @@ function renderSellerDashboard() {
   }
 
   if (form) {
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
+
+      const fileInput = document.getElementById('sellerImage');
+      const file = fileInput && fileInput.files && fileInput.files[0];
+      const imagePath = file ? await toDataUrl(file) : 'nike/s-l500.webp';
 
       const product = {
         id: `seller-${Date.now()}`,
@@ -469,10 +482,8 @@ function renderSellerDashboard() {
         name: document.getElementById('sellerName').value.trim(),
         price: Number(document.getElementById('sellerPrice').value || 0),
         oldPrice: Number(document.getElementById('sellerOldPrice').value || 0),
-        image: document.getElementById('sellerImage').value.trim() || 'nike/s-l500.webp',
-        gallery: [
-          document.getElementById('sellerImage').value.trim() || 'nike/s-l500.webp'
-        ],
+        image: imagePath,
+        gallery: [imagePath],
         colors: ['Default'],
         sizes: ['8'],
         sellerAdded: true

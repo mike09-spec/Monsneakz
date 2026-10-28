@@ -94,6 +94,22 @@
         border-radius: 10px;
       }
 
+      .upload-box {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        border: 1px dashed #d4d4d4;
+        border-radius: 10px;
+        background: #fafafa;
+      }
+
+      .upload-box input[type="file"] {
+        padding: 0;
+        border: none;
+        background: transparent;
+      }
+
       .primary-btn,
       .danger-btn,
       .second-btn {
@@ -230,8 +246,10 @@
               </label>
 
               <label>
-                Image URL
-                <input type="url" id="sellerImage" placeholder="https://example.com/shoe.webp" />
+                Product Picture
+                <div class="upload-box">
+                  <input type="file" id="sellerImage" accept="image/*" />
+                </div>
               </label>
 
               <button class="primary-btn" type="submit">Add Product</button>
